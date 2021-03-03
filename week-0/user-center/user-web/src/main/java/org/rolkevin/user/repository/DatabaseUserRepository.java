@@ -1,5 +1,6 @@
 package org.rolkevin.user.repository;
 
+import org.apache.derby.iapi.util.ReuseFactory;
 import org.rolkevin.function.ThrowableFunction;
 import org.rolkevin.user.domain.User;
 import org.rolkevin.user.sql.DBConnectionManager;
@@ -45,7 +46,19 @@ public class DatabaseUserRepository implements UserRepository {
 
     @Override
     public boolean save(User user) {
-        return false;
+        boolean result = false;
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER_DML_SQL);
+            preparedStatement.setString(1,user.getName());
+            preparedStatement.setString(2,user.getPassword());
+            preparedStatement.setString(3,user.getEmail());
+            preparedStatement.setString(4,user.getPhoneNumber());
+            result = preparedStatement.executeUpdate() == 1;
+        }catch(Exception e){
+
+        }
+        return result;
     }
 
     @Override

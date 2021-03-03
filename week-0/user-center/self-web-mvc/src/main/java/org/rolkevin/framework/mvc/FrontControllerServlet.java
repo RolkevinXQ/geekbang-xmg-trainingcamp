@@ -137,7 +137,6 @@ public class FrontControllerServlet extends HttpServlet {
                         return;
                     }
                     if (controller instanceof PageController) {
-                        controller.getClass().newInstance();
                         Method method = handlerMethodInfo.getHandlerMethod();
                         Object result = (Object)method.invoke(controller.getClass().newInstance(),request, response);
                         if (result instanceof String){

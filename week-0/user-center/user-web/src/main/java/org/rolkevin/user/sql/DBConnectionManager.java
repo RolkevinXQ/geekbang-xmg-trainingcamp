@@ -9,9 +9,16 @@ import java.lang.reflect.Method;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DBConnectionManager {
 
+    private static Logger logger = Logger.getLogger(DBConnectionManager.class.getName());
+
+    public DBConnectionManager(){
+        initDBConnectionManager();
+    }
     private Connection connection;
 
     public void setConnection(Connection connection) {
@@ -34,11 +41,12 @@ public class DBConnectionManager {
 
     public void initDBConnectionManager(){
         try {
-            String databaseURL = "jdbc:derby:/db/user-platform;create=true";
+            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+            String databaseURL = "jdbc:derby:db/user-platform;create=true";
             Connection connection = DriverManager.getConnection(databaseURL);
             setConnection(connection);
-        }catch (SQLException e){
-
+        }catch (Exception e){
+            logger.log(Level.INFO,"数据库驱动加载失败，信息：%s",e.getMessage());
         }
     }
 
@@ -49,7 +57,7 @@ public class DBConnectionManager {
             "name VARCHAR(16) NOT NULL, " +
             "password VARCHAR(64) NOT NULL, " +
             "email VARCHAR(64) NOT NULL, " +
-            "phoneNumber VARCHAR(64) NOT NULL" +
+            "phoneNumber VARCHAR(64) " +
             ")";
 
     public static final String INSERT_USER_DML_SQL = "INSERT INTO users(name,password,email,phoneNumber) VALUES " +
