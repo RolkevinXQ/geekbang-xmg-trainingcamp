@@ -26,20 +26,30 @@ public class UserController implements PageController {
         return "index.jsp";
     }
 
-    @POST
     @GET
     @Path("/register")
     public String register(HttpServletRequest request, HttpServletResponse response) throws Throwable {
-        return "register.jsp";
+        return "register1.jsp";
+    }
+
+    @GET
+    @Path("/register1")
+    public String register1(HttpServletRequest request, HttpServletResponse response) throws Throwable {
+        return "register1.jsp";
     }
 
     @POST
-    @GET
     @Path("/doregister")
     public String doregister(HttpServletRequest request, HttpServletResponse response) throws Throwable {
         User user = new User();
         String name = request.getParameter("userName");
+        String email = request.getParameter("userEmail");
+        String password = request.getParameter("userPassword");
+        String mobile = request.getParameter("userMobile");
         user.setName(name);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setPhoneNumber(mobile);
         if (userService.register(user)){
             request.setAttribute("user",user);
             return "welcome.jsp";
@@ -50,7 +60,6 @@ public class UserController implements PageController {
     }
 
     @GET
-    @POST
     @Path("/login")
     public String login(HttpServletRequest request, HttpServletResponse response) throws Throwable {
         return "login-form.jsp";

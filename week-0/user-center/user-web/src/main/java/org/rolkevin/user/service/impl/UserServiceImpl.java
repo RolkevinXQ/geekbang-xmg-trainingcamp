@@ -4,6 +4,9 @@ import org.rolkevin.user.domain.User;
 import org.rolkevin.user.repository.DatabaseUserRepository;
 import org.rolkevin.user.service.UserService;
 
+import java.util.Collection;
+import java.util.List;
+
 public class UserServiceImpl implements UserService {
 
     private final DatabaseUserRepository databaseUserRepository;
@@ -35,5 +38,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User queryUserByNameAndPassword(String name, String password) {
         return databaseUserRepository.getByNameAndPassword(name,password);
+    }
+
+    @Override
+    public Collection<User> queryAll() {
+        return databaseUserRepository.getAll();
     }
 }

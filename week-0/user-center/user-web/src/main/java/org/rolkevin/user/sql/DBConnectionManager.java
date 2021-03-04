@@ -16,17 +16,21 @@ public class DBConnectionManager {
 
     private static Logger logger = Logger.getLogger(DBConnectionManager.class.getName());
 
+    static final ThreadLocal<Connection> connectionThreadLocal = new ThreadLocal<Connection>();
+
     public DBConnectionManager(){
         initDBConnectionManager();
+        initDataBase();
     }
     private Connection connection;
 
     public void setConnection(Connection connection) {
         this.connection = connection;
+        connectionThreadLocal.set(connection);
     }
 
     public Connection getConnection() {
-        return this.connection;
+        return connectionThreadLocal.get();
     }
 
     public void releaseConnection() {
@@ -48,6 +52,26 @@ public class DBConnectionManager {
         }catch (Exception e){
             logger.log(Level.INFO,"数据库驱动加载失败，信息：%s",e.getMessage());
         }
+    }
+
+    private void initDataBase() {
+        Connection connection = getConnection();
+
+        Statement statement = null;
+        try{
+            statement = connection.createStatement();
+            // 删除 users 表
+            System.out.println(statement.execute(DROP_USERS_TABLE_DDL_SQL));
+        }catch (Exception e){
+            System.err.println("删除数据库表："+e.getMessage());
+        }
+        try{
+            // 创建 users 表
+            System.out.println(statement.execute(CREATE_USERS_TABLE_DDL_SQL));
+        }catch (Exception e){
+            System.err.println("初始化数据库表："+e.getMessage());
+        }
+
     }
 
     public static final String DROP_USERS_TABLE_DDL_SQL = "DROP TABLE users ";

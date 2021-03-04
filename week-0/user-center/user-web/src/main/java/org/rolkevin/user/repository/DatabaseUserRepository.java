@@ -56,7 +56,7 @@ public class DatabaseUserRepository implements UserRepository {
             preparedStatement.setString(4,user.getPhoneNumber());
             result = preparedStatement.executeUpdate() == 1;
         }catch(Exception e){
-
+            System.err.println(e.getMessage());
         }
         return result;
     }
@@ -109,6 +109,7 @@ public class DatabaseUserRepository implements UserRepository {
                     // 以 id 为例，  user.setId(resultSet.getLong("id"));
                     setterMethodFromUser.invoke(user, resultValue);
                 }
+                users.add(user);
             }
             return users;
         }, e -> {
