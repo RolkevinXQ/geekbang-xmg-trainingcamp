@@ -5,7 +5,7 @@
     <parent>
         <artifactId>user-center</artifactId>
         <groupId>org.rolkevin.trainingcamp</groupId>
-        <version>v1-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -47,6 +47,13 @@
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.1</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.derby</groupId>
+                        <artifactId>derby</artifactId>
+                        <version>${derby.version}</version>
+                    </dependency>
+                </dependencies>
                 <executions>
                     <execution>
                         <id>tomcat-run</id>
@@ -58,6 +65,7 @@
                         <configuration>
                             <!-- ServletContext 路径 -->
                             <path>/</path>
+                            <enableNaming>true</enableNaming>
                         </configuration>
                     </execution>
                 </executions>

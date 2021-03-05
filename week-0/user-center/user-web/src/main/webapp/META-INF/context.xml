@@ -6,6 +6,10 @@
               maxActive="100" maxIdle="30" maxWait="10000"
               username="" password="" 
               driverClassName="org.apache.derby.jdbc.EmbeddedDriver"
-              url="jdbc:derby:Databases/UserCenterDB"/>
+              url="jdbc:derby:/db/user-center;create=true"/>
+
+	<Resource name="bean/DBConnectionManagerFactory" auth="Container"
+			  type="org.rolkevin.user.sql.DBConnectionManagerFactory"
+			  factory="org.apache.naming.factory.BeanFactory"/>
 
 </Context>

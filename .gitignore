@@ -1,0 +1,6 @@
+.idea/
+target/
+.extract/
+*.iml
+*.log
+.flattened-pom.xml

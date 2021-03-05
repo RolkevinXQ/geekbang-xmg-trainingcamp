@@ -1,6 +1,7 @@
 package org.rolkevin.user.web.controller;
 
 import org.rolkevin.framework.mvc.controller.PageController;
+import org.rolkevin.user.context.JNDIResourceContext;
 import org.rolkevin.user.domain.User;
 import org.rolkevin.user.repository.DatabaseUserRepository;
 import org.rolkevin.user.service.UserService;
@@ -16,8 +17,8 @@ import javax.ws.rs.Path;
 @Path("/user")
 public class UserController implements PageController {
 
-    private DBConnectionManager connectionManager = new DBConnectionManager();
-    private DatabaseUserRepository repository = new DatabaseUserRepository(connectionManager);
+
+    private DatabaseUserRepository repository = new DatabaseUserRepository();
     private UserService userService = new UserServiceImpl(repository);
 
     @Override

@@ -2,8 +2,10 @@ package org.rolkevin.user.repository;
 
 import org.apache.derby.iapi.util.ReuseFactory;
 import org.rolkevin.function.ThrowableFunction;
+import org.rolkevin.user.context.JNDIResourceContext;
 import org.rolkevin.user.domain.User;
 import org.rolkevin.user.sql.DBConnectionManager;
+import org.rolkevin.user.sql.DBConnectionManagerFactory;
 
 import java.beans.BeanInfo;
 import java.beans.Introspector;
@@ -34,14 +36,28 @@ public class DatabaseUserRepository implements UserRepository {
 
     public static final String QUERY_ALL_USERS_DML_SQL = "SELECT id,name,password,email,phoneNumber FROM users";
 
-    private final DBConnectionManager dbConnectionManager;
+    //@since 1.0
+    //private final DBConnectionManager dbConnectionManager;
 
-    public DatabaseUserRepository(DBConnectionManager dbConnectionManager) {
-        this.dbConnectionManager = dbConnectionManager;
+    private final DBConnectionManagerFactory dbConnectionManagerFactory;
+
+    /**
+     * @since 1.0
+     */
+//    public DatabaseUserRepository(DBConnectionManager dbConnectionManager) {
+//        this.dbConnectionManager = dbConnectionManager;
+//    }
+
+    /**
+     * @since 1.1通过JNDI依赖查找
+     */
+    public DatabaseUserRepository(){
+        this.dbConnectionManagerFactory = JNDIResourceContext.getInstance().getResource("bean/DBConnectionManagerFactory");
     }
 
     private Connection getConnection() {
-        return dbConnectionManager.getConnection();
+        //return dbConnectionManager.getConnection();
+        return dbConnectionManagerFactory.getConnection();
     }
 
     @Override

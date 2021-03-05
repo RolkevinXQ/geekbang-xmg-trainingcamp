@@ -2,6 +2,10 @@ package org.rolkevin.user.sql;
 
 import org.rolkevin.user.domain.User;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+import javax.xml.crypto.Data;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
@@ -19,8 +23,8 @@ public class DBConnectionManager {
     static final ThreadLocal<Connection> connectionThreadLocal = new ThreadLocal<Connection>();
 
     public DBConnectionManager(){
-        initDBConnectionManager();
-        initDataBase();
+        //initDBConnectionManager();
+        //initDataBase();
     }
     private Connection connection;
 
@@ -51,6 +55,18 @@ public class DBConnectionManager {
             setConnection(connection);
         }catch (Exception e){
             logger.log(Level.INFO,"数据库驱动加载失败，信息：%s",e.getMessage());
+        }
+    }
+
+    public void initDBConnectionManagerByJNDI(){
+        try {
+            Context initCtx = new InitialContext();
+            Context envContext = (Context) initCtx.lookup("java:comp/env");
+            DataSource dataSource = (DataSource) envContext.lookup("jdbc/UserCenterDB");
+            Connection connection = dataSource.getConnection();
+            setConnection(connection);
+        }catch (Exception e){
+            logger.log(Level.INFO,"数据库JNDI加载失败，信息：%s",e.getMessage());
         }
     }
 
