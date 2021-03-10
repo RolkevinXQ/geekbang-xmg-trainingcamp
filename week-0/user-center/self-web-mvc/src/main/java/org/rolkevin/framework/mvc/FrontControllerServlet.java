@@ -18,7 +18,9 @@ import javax.ws.rs.Path;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.*;
+import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
 import static org.apache.commons.lang.StringUtils.substringAfter;
@@ -186,6 +188,25 @@ public class FrontControllerServlet extends HttpServlet {
             }
         }
     }
+
+//    private void injectComponents(Object component, Class<?> componentClass) {
+//        Stream.of(componentClass.getDeclaredFields())
+//                .filter(field -> {
+//                    int mods = field.getModifiers();
+//                    return !Modifier.isStatic(mods) &&
+//                            field.isAnnotationPresent(Resource.class);
+//                }).forEach(field -> {
+//            Resource resource = field.getAnnotation(Resource.class);
+//            String resourceName = resource.name();
+//            Object injectedObject = lookupComponent(resourceName);
+//            field.setAccessible(true);
+//            try {
+//                // 注入目标对象
+//                field.set(component, injectedObject);
+//            } catch (IllegalAccessException e) {
+//            }
+//        });
+//    }
 
 //    private void beforeInvoke(Method handleMethod, HttpServletRequest request, HttpServletResponse response) {
 //

@@ -1,5 +1,6 @@
 package org.rolkevin.user.web.listener;
 
+import org.rolkevin.user.context.ComponentContext;
 import org.rolkevin.user.context.JNDIResourceContext;
 
 import javax.naming.Context;
@@ -18,14 +19,18 @@ public class DBConnectionInitListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         this.servletContext = servletContextEvent.getServletContext();
-        JNDIResourceContext jndiResourceContext = new JNDIResourceContext();
-        jndiResourceContext.initResourceContext();
-        jndiResourceContext.setServletContext(this.servletContext);
+//        JNDIResourceContext jndiResourceContext = new JNDIResourceContext();
+//        jndiResourceContext.initResourceContext();
+//        jndiResourceContext.setServletContext(this.servletContext);
+        ComponentContext context = new ComponentContext();
+        context.initComponentContext(servletContext);
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
-        JNDIResourceContext context = JNDIResourceContext.getInstance();
+//        JNDIResourceContext context = JNDIResourceContext.getInstance();
+//        context.destroy();
+        ComponentContext context = ComponentContext.getInstance();
         context.destroy();
     }
 

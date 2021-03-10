@@ -2,6 +2,7 @@ package org.rolkevin.user.repository;
 
 import org.apache.derby.iapi.util.ReuseFactory;
 import org.rolkevin.function.ThrowableFunction;
+import org.rolkevin.user.context.ComponentContext;
 import org.rolkevin.user.context.JNDIResourceContext;
 import org.rolkevin.user.domain.User;
 import org.rolkevin.user.sql.DBConnectionManager;
@@ -52,7 +53,8 @@ public class DatabaseUserRepository implements UserRepository {
      * @since 1.1通过JNDI依赖查找
      */
     public DatabaseUserRepository(){
-        this.dbConnectionManagerFactory = JNDIResourceContext.getInstance().getResource("bean/DBConnectionManagerFactory");
+        //this.dbConnectionManagerFactory = JNDIResourceContext.getInstance().getResource("bean/DBConnectionManagerFactory");
+          this.dbConnectionManagerFactory = ComponentContext.getInstance().getComponent("bean/DBConnectionManagerFactory");
     }
 
     private Connection getConnection() {

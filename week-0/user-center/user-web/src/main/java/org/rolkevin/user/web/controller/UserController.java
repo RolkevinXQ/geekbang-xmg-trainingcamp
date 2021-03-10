@@ -1,13 +1,16 @@
 package org.rolkevin.user.web.controller;
 
 import org.rolkevin.framework.mvc.controller.PageController;
+import org.rolkevin.user.context.ComponentContext;
 import org.rolkevin.user.context.JNDIResourceContext;
 import org.rolkevin.user.domain.User;
 import org.rolkevin.user.repository.DatabaseUserRepository;
+import org.rolkevin.user.response.ResponseResult;
 import org.rolkevin.user.service.UserService;
 import org.rolkevin.user.service.impl.UserServiceImpl;
 import org.rolkevin.user.sql.DBConnectionManager;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
@@ -18,8 +21,11 @@ import javax.ws.rs.Path;
 public class UserController implements PageController {
 
 
-    private DatabaseUserRepository repository = new DatabaseUserRepository();
-    private UserService userService = new UserServiceImpl(repository);
+    //private DatabaseUserRepository repository = new DatabaseUserRepository();
+    //private UserService userService = new UserServiceImpl(repository);
+
+    //@Resource(name = "bean/userService")
+    private UserService userService = ComponentContext.getInstance().getComponent("bean/userService");
 
     @Override
     @Path("/hello")
@@ -42,6 +48,7 @@ public class UserController implements PageController {
     @POST
     @Path("/doregister")
     public String doregister(HttpServletRequest request, HttpServletResponse response) throws Throwable {
+        /*
         User user = new User();
         String name = request.getParameter("userName");
         String email = request.getParameter("userEmail");
@@ -56,7 +63,29 @@ public class UserController implements PageController {
             return "welcome.jsp";
         }else{
             return "register.jsp";
+        }*/
+
+        String viewPage = "";
+        User user = new User();
+        String name = request.getParameter("userName");
+        String email = request.getParameter("userEmail");
+        String password = request.getParameter("userPassword");
+        String mobile = request.getParameter("userMobile");
+        user.setName(name);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setPhoneNumber(mobile);
+
+        ResponseResult result = userService.registerR(user);
+        if (result.getCode()<0){
+            request.setAttribute("result",result);
+            viewPage = "error.jsp";
+
+        }else {
+            request.setAttribute("user",user);
+            viewPage = "welcome.jsp";
         }
+        return viewPage;
 
     }
 

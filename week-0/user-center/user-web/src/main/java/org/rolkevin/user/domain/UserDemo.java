@@ -6,7 +6,9 @@ import org.rolkevin.user.bean.validation.group.AddUserGroup;
 import org.rolkevin.user.bean.validation.group.UpdateUserGroup;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 /**
@@ -17,7 +19,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "users")
 @UserValid(groups = {UpdateUserGroup.class, AddUserGroup.class})
-public class User {
+public class UserDemo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,7 +40,7 @@ public class User {
     private String email;
 
     @Column
-    @NotNull(message = "电话号码不能为空")
+    @NotNull(message = "电话号码不能为空",groups = {UpdateUserGroup.class, AddUserGroup.class})
     //@Pattern(regexp = "^[1][3,4,5,6,7,8,9][0-9]{9}$",message = "手机号码格式不合法",groups = {UpdateUserGroup.class, AddUserGroup.class})
     private String phoneNumber;
 
@@ -86,7 +88,7 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
+        UserDemo user = (UserDemo) o;
         return Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(phoneNumber, user.phoneNumber);
     }
 
