@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User queryUserById(Long id) {
-        return null;
+        return jpaUserRepository.getById(id);
     }
 
     @Override

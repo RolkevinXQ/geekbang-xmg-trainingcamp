@@ -20,24 +20,25 @@ import java.util.Objects;
 public class User {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull(message = "ID不能为空",groups = UpdateUserGroup.class)
     private Long id;
 
-    @Column
+    @Column(name = "name")
     @NotNull(message = "用户名不能为空",groups = {UpdateUserGroup.class, AddUserGroup.class})
     private String name;
 
-    @Column
+    @Column(name = "password")
     //@Size(min = 6,max = 32,message = "密码不能低于6位,大于32位",groups = {UpdateUserGroup.class, AddUserGroup.class})
     private String password;
 
-    @Column
+    @Column(name = "email")
     @NotNull(message = "邮箱不能为空",groups = {UpdateUserGroup.class, AddUserGroup.class})
     @Email()
     private String email;
 
-    @Column
+    @Column(name = "phonenumber")
     @NotNull(message = "电话号码不能为空")
     //@Pattern(regexp = "^[1][3,4,5,6,7,8,9][0-9]{9}$",message = "手机号码格式不合法",groups = {UpdateUserGroup.class, AddUserGroup.class})
     private String phoneNumber;

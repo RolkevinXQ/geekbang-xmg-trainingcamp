@@ -82,7 +82,8 @@ public class UserController implements PageController {
             viewPage = "error.jsp";
 
         }else {
-            request.setAttribute("user",user);
+            User newUser = userService.queryUserById(user.getId());
+            request.setAttribute("user",newUser);
             viewPage = "welcome.jsp";
         }
         return viewPage;

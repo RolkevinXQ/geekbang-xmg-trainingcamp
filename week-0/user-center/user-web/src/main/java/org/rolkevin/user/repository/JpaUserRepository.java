@@ -4,14 +4,18 @@ import org.rolkevin.user.domain.User;
 import org.rolkevin.user.template.EntityTransactionTemplate;
 
 import javax.annotation.Resource;
-import javax.persistence.EntityManager;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class JpaUserRepository implements UserRepository {
 
     private Logger logger = Logger.getLogger(this.getClass().getName());
+
+    public static final String QUERY_ALL_USERS_DML_SQL = "SELECT id,name,password,email,phoneNumber FROM users ";
 
     @Resource(name = "bean/entityTransactionTemplate")
     private EntityTransactionTemplate entityTransactionTemplate;
@@ -40,7 +44,10 @@ public class JpaUserRepository implements UserRepository {
 
     @Override
     public User getById(Long userId) {
-        return null;
+//        String sql = QUERY_ALL_USERS_DML_SQL.concat("where id = ?");
+//        List<User> list = (List<User>) entityTransactionTemplate.createNativeQuery(sql,null, Arrays.asList(new String[]{String.valueOf(userId)}));
+//        return  list.get(0);
+       return (User) entityTransactionTemplate.findObject(User.class,userId);
     }
 
     @Override
