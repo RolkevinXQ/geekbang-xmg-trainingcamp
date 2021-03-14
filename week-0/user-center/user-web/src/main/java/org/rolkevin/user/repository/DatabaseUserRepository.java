@@ -1,11 +1,8 @@
 package org.rolkevin.user.repository;
 
-import org.apache.derby.iapi.util.ReuseFactory;
 import org.rolkevin.function.ThrowableFunction;
 import org.rolkevin.user.context.ComponentContext;
-import org.rolkevin.user.context.JNDIResourceContext;
 import org.rolkevin.user.domain.User;
-import org.rolkevin.user.sql.DBConnectionManager;
 import org.rolkevin.user.sql.DBConnectionManagerFactory;
 
 import java.beans.BeanInfo;

@@ -1,18 +1,13 @@
 package org.rolkevin.user.web.listener;
 
 import org.rolkevin.user.context.ComponentContext;
-import org.rolkevin.user.context.JNDIResourceContext;
 import org.rolkevin.user.domain.User;
 import org.rolkevin.user.sql.DBConnectionManagerFactory;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.util.logging.Logger;
 

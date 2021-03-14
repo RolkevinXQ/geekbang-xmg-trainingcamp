@@ -2,13 +2,9 @@ package org.rolkevin.user.web.controller;
 
 import org.rolkevin.framework.mvc.controller.PageController;
 import org.rolkevin.user.context.ComponentContext;
-import org.rolkevin.user.context.JNDIResourceContext;
 import org.rolkevin.user.domain.User;
-import org.rolkevin.user.repository.DatabaseUserRepository;
 import org.rolkevin.user.response.ResponseResult;
 import org.rolkevin.user.service.UserService;
-import org.rolkevin.user.service.impl.UserServiceImpl;
-import org.rolkevin.user.sql.DBConnectionManager;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -24,8 +20,8 @@ public class UserController implements PageController {
     //private DatabaseUserRepository repository = new DatabaseUserRepository();
     //private UserService userService = new UserServiceImpl(repository);
 
-    //@Resource(name = "bean/userService")
-    private UserService userService = ComponentContext.getInstance().getComponent("bean/userService");
+    @Resource(name = "bean/userService")
+    private UserService userService ;//= ComponentContext.getInstance().getComponent("bean/userService");
 
     @Override
     @Path("/hello")

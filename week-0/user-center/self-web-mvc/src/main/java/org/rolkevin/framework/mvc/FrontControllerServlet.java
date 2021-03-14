@@ -5,7 +5,9 @@ import org.rolkevin.framework.mvc.controller.Controller;
 import org.rolkevin.framework.mvc.HandlerMethodInfo;
 import org.rolkevin.framework.mvc.controller.PageController;
 import org.rolkevin.framework.mvc.controller.RestController;
+import org.rolkevin.user.context.ComponentContext;
 
+import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -17,8 +19,10 @@ import javax.ws.rs.HttpMethod;
 import javax.ws.rs.Path;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.sql.Connection;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -37,6 +41,8 @@ public class FrontControllerServlet extends HttpServlet {
      */
     private Map<String, HandlerMethodInfo> handleMethodInfoMapping = new HashMap<>();
 
+    private ComponentContext componentContext = ComponentContext.getInstance();
+
     /**
      * 初始化 Servlet
      *
@@ -44,8 +50,41 @@ public class FrontControllerServlet extends HttpServlet {
      */
     public void init(ServletConfig servletConfig) {
         initHandleMethods();
+        //initHandleMethodsByJNDI();
     }
 
+    /**
+     * 通过JNDI方式，获取所有controller
+     */
+    private void initHandleMethodsByJNDI() {
+        //ComponentContext context = ComponentContext.getInstance();
+        List<String> beanNames = componentContext.getComponentNames();
+
+        for (String beanName:beanNames){
+            if (!beanName.startsWith("controller")){
+                continue;
+            }
+            Controller controller = componentContext.getComponent(beanName);
+            Class<?> controllerClass = controller.getClass();
+            Path pathFromClass = controllerClass.getAnnotation(Path.class);
+            String requestPath = pathFromClass.value();
+            Method[] publicMethods = controllerClass.getMethods();
+            // 处理方法支持的 HTTP 方法集合
+            for (Method method : publicMethods) {
+                Set<String> supportedHttpMethods = findSupportedHttpMethods(method);
+                Path pathFromMethod = method.getAnnotation(Path.class);
+                if (pathFromMethod != null) {
+                    String tempPath = requestPath;
+                    tempPath += pathFromMethod.value();
+
+                    handleMethodInfoMapping.put(tempPath,
+                            new HandlerMethodInfo(tempPath, method, supportedHttpMethods));
+
+                    controllersMapping.put(tempPath, controller);
+                }
+            }
+        }
+    }
     /**
      * 读取所有的 RestController 的注解元信息 @Path
      * 利用 ServiceLoader 技术（Java SPI）
@@ -138,6 +177,22 @@ public class FrontControllerServlet extends HttpServlet {
                         response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
                         return;
                     }
+
+                    //得到controller里面的声明字段
+                    Field [] fields = controller.getClass().getDeclaredFields();
+                    //遍历
+                    for(Field field:fields){
+                        if(!field.isAnnotationPresent(Resource.class)) {
+                            continue;
+                        }
+                        Resource resource = field.getAnnotation(Resource.class);
+                        String resourceName = resource.name();
+                        Object injectedObject = componentContext.getComponent(resourceName);
+                        field.setAccessible(true);
+                        field.set(controller,injectedObject);
+                    }
+
+
                     if (controller instanceof PageController) {
                         Method method = handlerMethodInfo.getHandlerMethod();
                         Object result = (Object)method.invoke(controller.getClass().newInstance(),request, response);

@@ -12,6 +12,7 @@
     <modules>
         <module>self-web-mvc</module>
         <module>user-web</module>
+        <module>common-component</module>
     </modules>
     <!--<version>1.0-SNAPSHOT</version>-->
 

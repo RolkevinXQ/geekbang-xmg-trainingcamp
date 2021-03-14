@@ -3,10 +3,9 @@ package org.rolkevin.user.context;
 import org.rolkevin.function.ThrowableAction;
 import org.rolkevin.function.ThrowableFunction;
 
-import javax.annotation.Resource;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-
+import javax.annotation.Resource;
 import javax.naming.*;
 import javax.servlet.ServletContext;
 import java.lang.reflect.Modifier;

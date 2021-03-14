@@ -1,7 +1,7 @@
 package org.rolkevin.user.web.listener;
 
+import org.rolkevin.framework.mvc.container.ComponentContextContainer;
 import org.rolkevin.user.context.ComponentContext;
-import org.rolkevin.user.context.JNDIResourceContext;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -10,7 +10,6 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.util.logging.Level;
 
 public class DBConnectionInitListener implements ServletContextListener {
 
@@ -24,6 +23,7 @@ public class DBConnectionInitListener implements ServletContextListener {
 //        jndiResourceContext.setServletContext(this.servletContext);
         ComponentContext context = new ComponentContext();
         context.initComponentContext(servletContext);
+        ComponentContextContainer contextContainer = new ComponentContextContainer(null);
     }
 
     @Override
