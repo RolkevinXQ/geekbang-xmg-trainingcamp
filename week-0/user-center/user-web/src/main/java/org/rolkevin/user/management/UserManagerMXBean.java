@@ -5,7 +5,7 @@ import org.rolkevin.user.domain.User;
 /**
  * 自定义MBean，接口命名要以MBean结尾
  */
-public interface UserManagerMBean {
+public interface UserManagerMXBean {
     // MBeanAttributeInfo 列表
     Long getId();
 
@@ -33,4 +33,6 @@ public interface UserManagerMBean {
     User getUser();
 
     void addUser(User user);
+
+    void setUser(User user);
 }

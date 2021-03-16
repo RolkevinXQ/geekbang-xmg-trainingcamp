@@ -3,6 +3,7 @@ package org.rolkevin.user.sql;
 import org.rolkevin.user.context.JNDIResourceContext;
 import org.rolkevin.user.domain.User;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -32,6 +33,27 @@ public class DBConnectionManagerFactory {
     @Resource(name = "bean/entityManager")
     private EntityManager entityManager;
 
+
+    @PostConstruct
+    public void initDataBase() {
+        Connection connection = getConnection();
+
+        Statement statement = null;
+        try{
+            statement = connection.createStatement();
+            // 删除 users 表
+            statement.execute(DROP_USERS_TABLE_DDL_SQL);
+        }catch (Exception e){
+            logger.info("删除数据库表："+e.getMessage());
+        }
+        try{
+            // 创建 users 表
+            statement.execute(CREATE_USERS_TABLE_DDL_SQL);
+        }catch (Exception e){
+            logger.info("初始化数据库表："+e.getMessage());
+        }
+
+    }
 
     /*
     @Deprecated
@@ -94,25 +116,6 @@ public class DBConnectionManagerFactory {
         }
     }
 
-    private void initDataBase() {
-        Connection connection = getConnection();
-
-        Statement statement = null;
-        try{
-            statement = connection.createStatement();
-            // 删除 users 表
-            System.out.println(statement.execute(DROP_USERS_TABLE_DDL_SQL));
-        }catch (Exception e){
-            System.err.println("删除数据库表："+e.getMessage());
-        }
-        try{
-            // 创建 users 表
-            System.out.println(statement.execute(CREATE_USERS_TABLE_DDL_SQL));
-        }catch (Exception e){
-            System.err.println("初始化数据库表："+e.getMessage());
-        }
-
-    }
 
     public static final String DROP_USERS_TABLE_DDL_SQL = "DROP TABLE users ";
 

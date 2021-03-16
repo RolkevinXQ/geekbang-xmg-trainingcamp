@@ -34,6 +34,9 @@
 			  type="org.rolkevin.user.service.impl.UserServiceImpl"
 			  factory="org.apache.naming.factory.BeanFactory" />
 
+	<Resource name="web/userController" auth="Container"
+			  type="org.rolkevin.user.web.controller.UserController"
+			  factory="org.apache.naming.factory.BeanFactory" />
 
 
 </Context>

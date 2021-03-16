@@ -2,12 +2,15 @@ package org.rolkevin.user.web.listener;
 
 import org.rolkevin.user.context.ComponentContext;
 import org.rolkevin.user.domain.User;
+import org.rolkevin.user.management.UserManager;
 import org.rolkevin.user.sql.DBConnectionManagerFactory;
 
+import javax.management.*;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import java.lang.management.ManagementFactory;
 import java.sql.Connection;
 import java.util.logging.Logger;
 
@@ -32,6 +35,26 @@ public class TestDBConnectionInitListener implements ServletContextListener {
         context.getComponentNames().forEach(logger::info);
         logger.info("]");
 
+        createMXBean();
+
+
+    }
+
+    private void createMXBean() {
+        MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
+        ObjectName objectName = null;
+        try {
+            objectName = new ObjectName("org.rolkevin.user.management.MBeanDemo:type=MBeanDemo");
+            User user = new User();
+            user.setName("XQ");
+            user.setEmail("xq@foxmail.com");
+            user.setPhoneNumber("10086");
+
+            UserManager userManager = new UserManager(user);
+            mBeanServer.registerMBean(userManager,objectName);
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+        }
 
     }
 

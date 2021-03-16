@@ -18,7 +18,7 @@
     <servlet>
         <servlet-name>FrontControllerServlet</servlet-name>
         <servlet-class>org.rolkevin.framework.mvc.FrontControllerServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
+        <load-on-startup>2</load-on-startup>
     </servlet>
     
     <servlet-mapping>
@@ -29,7 +29,12 @@
     <servlet>
         <servlet-name>jolokia-agent</servlet-name>
         <servlet-class>org.jolokia.http.AgentServlet</servlet-class>
+        <init-param>
+            <param-name>mimeType</param-name>
+            <param-value>application/json</param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
+
     </servlet>
 
     <servlet-mapping>

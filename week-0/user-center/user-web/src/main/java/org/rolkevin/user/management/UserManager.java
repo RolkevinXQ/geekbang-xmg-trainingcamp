@@ -2,12 +2,28 @@ package org.rolkevin.user.management;
 
 import org.rolkevin.user.domain.User;
 
-public class UserManager implements UserManagerMBean {
+import java.util.LinkedList;
+import java.util.List;
 
-    private final User user;
+public class UserManager implements UserManagerMXBean {
+
+    private  User user;
+
+    private List<User> userList = new LinkedList<>();
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+    }
+
+
 
     public UserManager(User user) {
         this.user = user;
+        userList.add(user);
     }
 
 
@@ -69,5 +85,29 @@ public class UserManager implements UserManagerMBean {
     @Override
     public User getUser() {
         return user;
+    }
+
+
+    @Override
+    public void addUser(User user) {
+        userList.add(user);
+    }
+
+    @Override
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
+    public int  getUserCount(){
+        return this.userList.size();
+    }
+
+    public void removeUserFromList(String name){
+        userList.forEach(user1 -> {
+            if (user1.getName().equals(name)){
+                userList.remove(user1);
+            }
+        });
     }
 }

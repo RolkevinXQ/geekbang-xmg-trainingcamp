@@ -195,7 +195,7 @@ public class FrontControllerServlet extends HttpServlet {
 
                     if (controller instanceof PageController) {
                         Method method = handlerMethodInfo.getHandlerMethod();
-                        Object result = (Object)method.invoke(controller.getClass().newInstance(),request, response);
+                        Object result = (Object)method.invoke(controller,request, response);
                         if (result instanceof String){
                             String viewPath = (String)result;
                             if (!viewPath.startsWith("/")) {
