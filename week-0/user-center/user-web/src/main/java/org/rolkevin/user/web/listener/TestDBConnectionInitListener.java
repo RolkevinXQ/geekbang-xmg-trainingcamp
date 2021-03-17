@@ -1,5 +1,6 @@
 package org.rolkevin.user.web.listener;
 
+import org.rolkevin.configuration.microprofile.config.JavaConfig;
 import org.rolkevin.user.context.ComponentContext;
 import org.rolkevin.user.domain.User;
 import org.rolkevin.user.management.UserManager;
@@ -12,6 +13,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.lang.management.ManagementFactory;
 import java.sql.Connection;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -37,9 +39,15 @@ public class TestDBConnectionInitListener implements ServletContextListener {
 
         createMXBean();
 
+        testConfing();
+
 
     }
 
+
+    /**
+     * 注册JMX Bean
+     */
     private void createMXBean() {
         MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
         ObjectName objectName = null;
@@ -56,6 +64,15 @@ public class TestDBConnectionInitListener implements ServletContextListener {
             logger.info(e.getMessage());
         }
 
+    }
+
+    /**
+     * 读取本地配置
+     */
+    private void testConfing() {
+        JavaConfig config = new JavaConfig();
+        String value = config.getValue("application.name",String.class);
+        logger.log(Level.INFO,"本地配置-application.name = "+value);
     }
 
     private void testUser(EntityManager entityManager) {
