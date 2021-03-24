@@ -12,7 +12,7 @@ import java.util.*;
 
 import static java.util.stream.StreamSupport.stream;
 
-class DefaultConfig implements Config {
+public class DefaultConfig implements Config {
 
     private final ConfigSources configSources;
 

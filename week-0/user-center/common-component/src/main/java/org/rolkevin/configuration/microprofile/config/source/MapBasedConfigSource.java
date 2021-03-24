@@ -16,12 +16,29 @@ public abstract class MapBasedConfigSource implements ConfigSource {
 
     private final int ordinal;
 
-    private final Map<String, String> source;
+    private Map<String, String> source;
+
 
     protected MapBasedConfigSource(String name, int ordinal) {
         this.name = name;
         this.ordinal = ordinal;
         this.source = getProperties();
+
+    }
+
+    /**
+     * 通过addListener的时候，会先调用父类构造方法，而父类方法中又会调用getProperties，此时子类还没初始化完成，会出现NPE
+     * @param name
+     * @param ordinal
+     * @param isLoad 是否加载prepareConfigData，true-加载，false 不加载
+     */
+    protected MapBasedConfigSource(String name, int ordinal,boolean isLoad) {
+        this.name = name;
+        this.ordinal = ordinal;
+        if(isLoad){
+            this.source = getProperties();
+        }
+
     }
 
     /**

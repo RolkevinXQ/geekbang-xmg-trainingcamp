@@ -1,5 +1,8 @@
 package org.rolkevin.user.web.listener;
 
+import org.eclipse.microprofile.config.spi.ConfigSource;
+import org.rolkevin.configuration.microprofile.config.DefaultConfig;
+import org.rolkevin.configuration.microprofile.config.DefaultConfigProviderResolver;
 import org.rolkevin.configuration.microprofile.config.JavaConfig;
 import org.rolkevin.user.context.ComponentContext;
 import org.rolkevin.user.domain.User;
@@ -9,10 +12,12 @@ import org.rolkevin.user.sql.DBConnectionManagerFactory;
 import javax.management.*;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.lang.management.ManagementFactory;
 import java.sql.Connection;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,6 +34,7 @@ public class TestDBConnectionInitListener implements ServletContextListener {
 //        JNDIResourceContext context = JNDIResourceContext.getInstance();
 //        DBConnectionManagerFactory managerFactory = context.getResource("bean/DBConnectionManagerFactory");
 //        Connection connection = managerFactory.getConnection();
+        ServletContext servletContext = servletContextEvent.getServletContext();
         ComponentContext context = ComponentContext.getInstance();
         DBConnectionManagerFactory managerFactory = context.getComponent("bean/DBConnectionManagerFactory");
         Connection connection = managerFactory.getConnection();
@@ -41,6 +47,19 @@ public class TestDBConnectionInitListener implements ServletContextListener {
 
         testConfing();
 
+        testConfigProvider(servletContext);
+
+
+    }
+
+    //在
+    private void testConfigProvider(ServletContext servletContext) {
+        DefaultConfigProviderResolver configProviderResolver = (DefaultConfigProviderResolver) servletContext.getAttribute("CONFIG_PROVIDER");
+        DefaultConfig config = (DefaultConfig) configProviderResolver.getConfig(servletContext.getClassLoader());
+        Iterable<ConfigSource>  configSource = config.getConfigSources();
+        configSource.forEach(configSource1 -> {
+           System.out.println(configSource1);
+        });
 
     }
 
