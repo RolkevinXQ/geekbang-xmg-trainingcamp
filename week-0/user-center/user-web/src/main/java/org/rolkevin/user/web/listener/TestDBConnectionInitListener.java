@@ -52,11 +52,14 @@ public class TestDBConnectionInitListener implements ServletContextListener {
 
     }
 
-    //在
+    /**
+     * 测试Config获取
+     */
     private void testConfigProvider(ServletContext servletContext) {
         DefaultConfigProviderResolver configProviderResolver = (DefaultConfigProviderResolver) servletContext.getAttribute("CONFIG_PROVIDER");
         DefaultConfig config = (DefaultConfig) configProviderResolver.getConfig(servletContext.getClassLoader());
         Iterable<ConfigSource>  configSource = config.getConfigSources();
+        logger.info("===配置源：===");
         configSource.forEach(configSource1 -> {
            System.out.println(configSource1);
         });

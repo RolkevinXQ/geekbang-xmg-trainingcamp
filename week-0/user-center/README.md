@@ -22,3 +22,20 @@
 + 需求2-1：本地配置文件在模块user-web/src/main/resources/META-INF/localconfig.properties
 + 需求2-2：Converter实现，只实现了String类型转换
 + 需求2-3：当前应用名称打印在Server运行日志中，关键词：本地配置-application.name
+
+
+#### 第四周：分支week4
+##### 内容：
+###### 需求1：完善 my dependency-injection 模块
++ 脱离 web.xml 配置实现 ComponentContext 自动初始化
++ 使用独立模块并且能够在 user-web 中运行成功
+###### 需求2：完善 my-configuration 模块
++ Config 对象如何能被 my-web-mvc 使用
++ 可能在 ServletContext 获取如何通过 ThreadLocal 获取
+
+###### week4的一些说明
++ 需求1：在ApplicationServletContainerInitializer#onStartup()中，通过SPI方式，加载ApplicationContainerInitializer的实现，
+回调各自的onStartUp()方法，以实现脱离web.xml配置
++ 需求2：在配置ServletConfigInitializer初始化最后，通过setAttribute方式将配置提供者DefaultConfigProviderResolver存入，
+后续可通过getAttribute方式获取；测试入口：TestDBConnectionInitListener#contextInitialized()#testConfigProvider()；运行成功时会有相应日志输出
+
