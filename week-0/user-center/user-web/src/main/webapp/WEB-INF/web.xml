@@ -6,10 +6,12 @@
            version="2.5">
 
     <!--JNDI资源初始化,必须放在第一 -->
+    <!-- 通过编程方式添加listener
     <listener>
         <description>JNDI Resource Init</description>
         <listener-class>org.rolkevin.user.web.listener.DBConnectionInitListener</listener-class>
     </listener>
+    -->
     
     <listener>
         <listener-class>org.rolkevin.user.web.listener.TestDBConnectionInitListener</listener-class>
