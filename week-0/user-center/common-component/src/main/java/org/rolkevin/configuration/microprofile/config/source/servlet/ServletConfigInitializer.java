@@ -8,6 +8,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 
+
 public class ServletConfigInitializer implements ApplicationContainerInitializer {
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
@@ -41,10 +42,12 @@ public class ServletConfigInitializer implements ApplicationContainerInitializer
 
         //把configProvider当作servletAttribute存储，后面只要可以得到servletContext，就可以得到config配置
         servletContext.setAttribute("CONFIG_PROVIDER",configProviderResolver);
+
     }
 
     @Override
     public int getOrdinal() {
         return 0;
     }
+
 }
