@@ -8,16 +8,14 @@ import org.rolkevin.framework.mvc.controller.RestController;
 import org.rolkevin.user.context.ComponentContext;
 
 import javax.annotation.Resource;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.Path;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -207,6 +205,16 @@ public class FrontControllerServlet extends HttpServlet {
                             return;
 
                         }
+
+                    }
+                    if (controller instanceof RestController){
+                        Method method = handlerMethodInfo.getHandlerMethod();
+                        Object result = (Object)method.invoke(controller,request, response);
+
+                        ServletOutputStream outputStream = response.getOutputStream();
+                        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream,"UTF-8");
+                        outputStreamWriter.write(result.toString());
+                        outputStreamWriter.flush();
 
                     }
 
