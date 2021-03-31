@@ -38,5 +38,9 @@
 			  type="org.rolkevin.user.web.controller.UserController"
 			  factory="org.apache.naming.factory.BeanFactory" />
 
+	<Resource name="web/restDemoController" auth="Container"
+			  type="org.rolkevin.user.web.controller.RestDemoController"
+			  factory="org.apache.naming.factory.BeanFactory" />
+
 
 </Context>
