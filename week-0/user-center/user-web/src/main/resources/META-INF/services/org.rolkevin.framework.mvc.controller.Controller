@@ -1,2 +1,3 @@
 org.rolkevin.user.web.controller.HelloWorldController
 org.rolkevin.user.web.controller.UserController
+org.rolkevin.user.web.controller.RestDemoController

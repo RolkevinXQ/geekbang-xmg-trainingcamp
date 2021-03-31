@@ -26,15 +26,9 @@ public class DefaultInvocationBuilder implements Invocation.Builder {
 
     private Map<String, Object> properties = new HashMap<>();
 
-    private final Entity entity;
 
     public DefaultInvocationBuilder(UriBuilder uriBuilder) {
         this.uriBuilder = uriBuilder;
-    }
-
-    public DefaultInvocationBuilder(UriBuilder uriBuilder,Entity entity) {
-        this.uriBuilder = uriBuilder;
-        this.entity = entity;
     }
 
     @Override
@@ -259,7 +253,7 @@ public class DefaultInvocationBuilder implements Invocation.Builder {
 
     @Override
     public Invocation buildPost(Entity<?> entity) {
-        return new HttpPostInvocation();
+        return new HttpPostInvocation(uriBuilder.build(),entity);
     }
 
     @Override

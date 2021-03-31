@@ -22,12 +22,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static java.util.Collections.emptyMap;
-import static org.geektimes.rest.util.URLUtils.resolveVariables;
-import static org.geektimes.rest.util.URLUtils.toTemplateVariables;
+import static com.rolkevin.rest.util.URLUtils.resolveVariables;
+import static com.rolkevin.rest.util.URLUtils.toTemplateVariables;
 import static org.junit.Assert.assertEquals;
 
 /**
- * {@link org.geektimes.rest.util.URLUtils}
+ * {@link com.rolkevin.rest.util.URLUtils}
  *
  * @author <a href="mailto:mercyblitz@gmail.com">Mercy</a>
  * @since

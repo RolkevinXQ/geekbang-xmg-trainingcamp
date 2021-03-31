@@ -18,6 +18,8 @@ import java.net.URI;
 import java.net.URL;
 import java.util.concurrent.Future;
 
+import static com.rolkevin.rest.util.URLUtils.DEFAULT_ENCODING;
+
 public class HttpPostInvocation implements Invocation {
 
     private final URI uri;
@@ -25,6 +27,8 @@ public class HttpPostInvocation implements Invocation {
     private final URL url;
 
     private final Entity entity;
+
+    private String encoding = DEFAULT_ENCODING;
 
     public HttpPostInvocation(URI uri,Entity entity) {
         this.uri = uri;
@@ -50,24 +54,27 @@ public class HttpPostInvocation implements Invocation {
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod(HttpMethod.POST);
             httpURLConnection.setDoOutput(true);
+            httpURLConnection.setDoInput(true);
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
-            httpURLConnection.connect();
+            //httpURLConnection.connect();
+
             OutputStream outputStream = httpURLConnection.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream));
-            writer.write(new ObjectMapper().writeValueAsString(entity.getEntity()));
+            OutputStreamWriter writer = new OutputStreamWriter(outputStream,"UTF-8");
+            writer.write(new ObjectMapper().writeValueAsString(entity.getEntity()));//new ObjectMapper().writeValueAsString(entity.getEntity())
             writer.flush();
-            writer.close();
+            //httpURLConnection.connect();
+            //writer.close();
             int statusCode = httpURLConnection.getResponseCode();
 
             DefaultResponse response = new DefaultResponse();
             response.setConnection(httpURLConnection);
             response.setStatus(statusCode);
-
+            writer.close();
+            return response;
         } catch (Exception e) {
-
+            return new DefaultResponse();
         }
 
-        return null;
     }
 
     @Override

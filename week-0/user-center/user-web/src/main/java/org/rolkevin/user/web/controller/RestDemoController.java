@@ -13,17 +13,17 @@ import java.io.InputStreamReader;
 
 @Path("/rest")
 public class RestDemoController implements RestController {
-    @Override
-    @GET
+
     @POST
     @Path("/apply")
     public Object execute(HttpServletRequest request, HttpServletResponse response) throws Throwable {
         ServletInputStream inputStream = request.getInputStream();
-        InputStreamReader reader = new InputStreamReader(inputStream);
+        InputStreamReader reader = new InputStreamReader(inputStream,"UTF-8");
         BufferedReader bufferedReader = new BufferedReader(reader);
         StringBuffer body = new StringBuffer();
-        while (bufferedReader.readLine() != null){
-            body.append(bufferedReader.readLine());
+        String temp = "";
+        while ((temp = bufferedReader.readLine()) != null){
+            body.append(temp);
         }
         return body;
     }

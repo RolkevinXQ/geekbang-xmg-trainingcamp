@@ -88,6 +88,7 @@ public class FrontControllerServlet extends HttpServlet {
      * 利用 ServiceLoader 技术（Java SPI）
      */
     private void initHandleMethods() {
+        //ServiceLoader<Controller> c = ServiceLoader.load(Controller.class);
         for (Controller controller : ServiceLoader.load(Controller.class)) {
             Class<?> controllerClass = controller.getClass();
             Path pathFromClass = controllerClass.getAnnotation(Path.class);
@@ -215,6 +216,7 @@ public class FrontControllerServlet extends HttpServlet {
                         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream,"UTF-8");
                         outputStreamWriter.write(result.toString());
                         outputStreamWriter.flush();
+                        outputStreamWriter.close();
 
                     }
 
