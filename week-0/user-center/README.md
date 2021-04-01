@@ -55,7 +55,7 @@
 
 ​       需要先启动/部署user-web，后执行RestClientDemo#main()
 
-- 需求1：暂时未完，后续补上（预计周五之前）
+- 需求1：reactive-messaging模块，test目录下，`DefaultSubscriber#onNext()`修改了一点内容
 
 
 
