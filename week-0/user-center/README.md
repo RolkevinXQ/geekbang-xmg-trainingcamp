@@ -10,7 +10,7 @@
 ##### 内容：
 ###### 需求1：
 + 整合Jolokia，实现一个自定义 JMX MBean，通过 Jolokia 做 Servlet 代理
- 
+
 ###### 需求2；
 + 拓展org.eclipse.microprofile.config.spi.ConfigSource实现，包括OS环境变量，本地配置文件
 + 拓展org.eclipse.microprofile.config.spi.Converter实现，提供String类型到简单类
@@ -38,4 +38,24 @@
 回调各自的onStartUp()方法，以实现脱离web.xml配置
 + 需求2：在配置ServletConfigInitializer初始化最后，通过setAttribute方式将配置提供者DefaultConfigProviderResolver存入，
 后续可通过getAttribute方式获取；测试入口：TestDBConnectionInitListener#contextInitialized()#testConfigProvider()；运行成功时会有相应日志输出
+
+
+
+#### 第五周：分支week5
+
+##### 内容：
+
+###### 需求1：修复本程序 org.geektimes.reactive.streams 包下
+
+###### 需求2：继续完善 my-rest-client POST 方法
+
+###### week5的一些说明
+
+- 需求2：post的实现在HttpPostInvocation#invoke()
+
+​       需要先启动/部署user-web，后执行RestClientDemo#main()
+
+- 需求1：暂时未完，后续补上（预计周五之前）
+
+
 
