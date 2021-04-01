@@ -14,6 +14,7 @@
         <module>user-web</module>
         <module>common-component</module>
         <module>rest-client</module>
+        <module>reactive-messaging</module>
     </modules>
     <!--<version>1.0-SNAPSHOT</version>-->
 
