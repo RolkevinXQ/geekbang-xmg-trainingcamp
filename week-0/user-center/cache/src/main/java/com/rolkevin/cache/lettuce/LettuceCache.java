@@ -2,26 +2,37 @@ package com.rolkevin.cache.lettuce;
 
 import com.rolkevin.cache.AbstractCache;
 import com.rolkevin.cache.ExpirableEntry;
+import io.lettuce.core.api.StatefulConnection;
+import io.lettuce.core.api.StatefulRedisConnection;
+import io.lettuce.core.api.sync.RedisCommands;
 
 import javax.cache.CacheException;
 import javax.cache.CacheManager;
 import javax.cache.configuration.Configuration;
+import java.io.Serializable;
 import java.util.Iterator;
 
-public class LettuceCache extends AbstractCache {
+public class LettuceCache<K extends Serializable,V extends Serializable> extends AbstractCache<K, V> {
 
-
-    protected LettuceCache(CacheManager cacheManager, String cacheName, Configuration configuration) {
+    private final StatefulRedisConnection<K, V> connect;
+    private final RedisCommands<K,V> redisCommands;
+    protected LettuceCache(CacheManager cacheManager,
+                           String cacheName,
+                           Configuration configuration,
+                           StatefulConnection<K,V> connection) {
         super(cacheManager, cacheName, configuration);
+        connect = (StatefulRedisConnection<K, V>) connection;
+        redisCommands = connect.sync();
+        redisCommands.auth("");
     }
 
     @Override
-    protected boolean containsEntry(Object key) throws CacheException, ClassCastException {
-        return false;
+    protected boolean containsEntry(K key) throws CacheException, ClassCastException {
+        return redisCommands.persist(key);
     }
 
     @Override
-    protected ExpirableEntry getEntry(Object key) throws CacheException, ClassCastException {
+    protected ExpirableEntry<K, V> getEntry(K key) throws CacheException, ClassCastException {
         return null;
     }
 
@@ -33,12 +44,12 @@ public class LettuceCache extends AbstractCache {
      * @throws ClassCastException
      */
     @Override
-    protected void putEntry(ExpirableEntry newEntry) throws CacheException, ClassCastException {
+    protected void putEntry(ExpirableEntry<K, V> newEntry) throws CacheException, ClassCastException {
 
     }
 
     @Override
-    protected ExpirableEntry removeEntry(Object key) throws CacheException, ClassCastException {
+    protected ExpirableEntry<K, V> removeEntry(K key) throws CacheException, ClassCastException {
         return null;
     }
 
@@ -48,7 +59,7 @@ public class LettuceCache extends AbstractCache {
     }
 
     @Override
-    protected Iterator<Entry> newIterator() {
+    protected Iterator<Entry<K, V>> newIterator() {
         return null;
     }
 }
