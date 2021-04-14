@@ -3,8 +3,10 @@ package org.rolkevin.user.sql;
 import org.rolkevin.user.context.JNDIResourceContext;
 import org.rolkevin.user.domain.User;
 
+import javax.annotation.Resource;
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
@@ -21,13 +23,18 @@ public class DBConnectionManagerFactory {
     private static Logger logger = Logger.getLogger(DBConnectionManagerFactory.class.getName());
 
     public DBConnectionManagerFactory(){
-        initDataBase();
+        //initDataBase();
     }
 
-    private Connection connection;
+    @Resource(name = "jdbc/UserCenterDB")
+    private DataSource dataSource;
+
+    @Resource(name = "bean/entityManager")
+    private EntityManager entityManager;
 
 
-
+    /*
+    @Deprecated
     public Connection getConnection() {
         JNDIResourceContext context = JNDIResourceContext.getInstance();
         Connection connection = null;
@@ -41,16 +48,39 @@ public class DBConnectionManagerFactory {
             logger.log(Level.INFO,"数据库连接获取成功");
         }
         return connection;
+    }*/
+
+    /** 通过注入的DataSource获取连接
+     * @since 1.1
+     * @return
+     */
+    public Connection getConnection() {
+        Connection connection = null;
+        try {
+            //DataSource dataSource = context.getResource("jdbc/UserCenterDB");
+            connection = dataSource.getConnection();
+        }catch (SQLException e){
+            logger.log(Level.SEVERE,"数据库连接获取失败",e);
+        }
+        if (connection != null){
+            logger.log(Level.INFO,"数据库连接获取成功");
+        }
+        return connection;
+    }
+
+    public EntityManager getEntityManager() {
+        logger.info("当前 EntityManager 实现类：" + entityManager.getClass().getName());
+        return entityManager;
     }
 
     public void releaseConnection() {
-        if (this.connection != null) {
-            try {
-                this.connection.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e.getCause());
-            }
-        }
+//        if (this.connection != null) {
+//            try {
+//                this.connection.close();
+//            } catch (SQLException e) {
+//                throw new RuntimeException(e.getCause());
+//            }
+//        }
     }
 
     public void initDBConnectionManagerByJNDI(){

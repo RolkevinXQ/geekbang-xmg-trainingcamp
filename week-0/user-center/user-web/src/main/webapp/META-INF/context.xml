@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context>
+<Context jndiExceptionOnFailedWrite="false">
 	<Resource name="jdbc/UserCenterDB"
               type="javax.sql.DataSource"  auth="Container"
               description="Derby database for User Platform"
@@ -11,5 +11,29 @@
 	<Resource name="bean/DBConnectionManagerFactory" auth="Container"
 			  type="org.rolkevin.user.sql.DBConnectionManagerFactory"
 			  factory="org.apache.naming.factory.BeanFactory"/>
+
+	<Resource name="bean/entityManager" auth="Container"
+			  type="org.rolkevin.user.orm.jpa.DelegatingEntityManager"
+			  persistenceUnitName = "emf"
+			  propertiesLocation = "META-INF/jpa-datasource.properties"
+			  factory="org.apache.naming.factory.BeanFactory"/>
+
+	<Resource name="bean/entityTransactionTemplate" auth="Container"
+			  type="org.rolkevin.user.template.EntityTransactionTemplate"
+			  factory="org.apache.naming.factory.BeanFactory" />
+
+	<Resource name="bean/Validator" auth="Container"
+			  type="org.rolkevin.user.bean.validation.DelegatingValidator"
+			  factory="org.apache.naming.factory.BeanFactory" />
+
+	<Resource name="bean/jpaUserRepository" auth="Container"
+			  type="org.rolkevin.user.repository.JpaUserRepository"
+			  factory="org.apache.naming.factory.BeanFactory" />
+
+	<Resource name="bean/userService" auth="Container"
+			  type="org.rolkevin.user.service.impl.UserServiceImpl"
+			  factory="org.apache.naming.factory.BeanFactory" />
+
+
 
 </Context>

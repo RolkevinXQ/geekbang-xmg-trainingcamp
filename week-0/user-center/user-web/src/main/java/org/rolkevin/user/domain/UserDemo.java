@@ -6,7 +6,9 @@ import org.rolkevin.user.bean.validation.group.AddUserGroup;
 import org.rolkevin.user.bean.validation.group.UpdateUserGroup;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 /**
@@ -17,29 +19,28 @@ import java.util.Objects;
 @Entity
 @Table(name = "users")
 @UserValid(groups = {UpdateUserGroup.class, AddUserGroup.class})
-public class User {
+public class UserDemo {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull(message = "ID不能为空",groups = UpdateUserGroup.class)
     private Long id;
 
-    @Column(name = "name")
+    @Column
     @NotNull(message = "用户名不能为空",groups = {UpdateUserGroup.class, AddUserGroup.class})
     private String name;
 
-    @Column(name = "password")
+    @Column
     //@Size(min = 6,max = 32,message = "密码不能低于6位,大于32位",groups = {UpdateUserGroup.class, AddUserGroup.class})
     private String password;
 
-    @Column(name = "email")
+    @Column
     @NotNull(message = "邮箱不能为空",groups = {UpdateUserGroup.class, AddUserGroup.class})
     @Email()
     private String email;
 
-    @Column(name = "phonenumber")
-    @NotNull(message = "电话号码不能为空")
+    @Column
+    @NotNull(message = "电话号码不能为空",groups = {UpdateUserGroup.class, AddUserGroup.class})
     //@Pattern(regexp = "^[1][3,4,5,6,7,8,9][0-9]{9}$",message = "手机号码格式不合法",groups = {UpdateUserGroup.class, AddUserGroup.class})
     private String phoneNumber;
 
@@ -87,7 +88,7 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
+        UserDemo user = (UserDemo) o;
         return Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(phoneNumber, user.phoneNumber);
     }
 

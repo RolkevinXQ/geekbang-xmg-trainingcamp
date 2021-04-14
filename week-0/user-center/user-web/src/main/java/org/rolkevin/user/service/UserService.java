@@ -1,6 +1,7 @@
 package org.rolkevin.user.service;
 
 import org.rolkevin.user.domain.User;
+import org.rolkevin.user.response.ResponseResult;
 
 import java.util.Collection;
 import java.util.List;
@@ -39,4 +40,6 @@ public interface UserService {
     User queryUserByNameAndPassword(String name, String password);
 
     Collection<User> queryAll();
+
+    ResponseResult registerR(User user);
 }
