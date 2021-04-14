@@ -29,7 +29,7 @@ public class LettuceCache<K extends Serializable,V extends Serializable> extends
 
     @Override
     protected boolean containsEntry(K key) throws CacheException, ClassCastException {
-        return redisCommands.persist(key);
+        return redisCommands.exists(key) > 0;
     }
 
     @Override

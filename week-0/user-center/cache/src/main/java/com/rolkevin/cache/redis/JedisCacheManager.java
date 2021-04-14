@@ -25,7 +25,7 @@ public class JedisCacheManager extends AbstractCacheManager {
     @Override
     protected <K, V, C extends Configuration<K, V>> Cache doCreateCache(String cacheName, C configuration) {
         Jedis jedis = jedisPool.getResource();
-        jedis.auth("jedis");
+        //jedis.auth("jedis");
         return new JedisCache(this, cacheName, configuration, jedis);
     }
 
