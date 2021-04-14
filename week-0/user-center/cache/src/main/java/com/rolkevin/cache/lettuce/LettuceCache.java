@@ -6,6 +6,7 @@ import io.lettuce.core.api.StatefulConnection;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.sync.RedisCommands;
 
+import javax.cache.Cache;
 import javax.cache.CacheException;
 import javax.cache.CacheManager;
 import javax.cache.configuration.Configuration;
@@ -23,7 +24,7 @@ public class LettuceCache<K extends Serializable,V extends Serializable> extends
         super(cacheManager, cacheName, configuration);
         connect = (StatefulRedisConnection<K, V>) connection;
         redisCommands = connect.sync();
-        redisCommands.auth("");
+        //redisCommands.auth("");
     }
 
     @Override
@@ -33,8 +34,15 @@ public class LettuceCache<K extends Serializable,V extends Serializable> extends
 
     @Override
     protected ExpirableEntry<K, V> getEntry(K key) throws CacheException, ClassCastException {
-        return null;
+        V value = redisCommands.get(key);
+        return ExpirableEntry.of(key,value);
+        //return redisCommands.get(key);
     }
+
+    /*protected ExpirableEntry<K, V> getEntry(byte[] keyBytes) throws CacheException, ClassCastException {
+        byte[] valueBytes = jedis.get(keyBytes);
+        return ExpirableEntry.of(deserialize(keyBytes), deserialize(valueBytes));
+    }*/
 
     /**
      * Put the {@link Entry} into cache.
@@ -45,12 +53,14 @@ public class LettuceCache<K extends Serializable,V extends Serializable> extends
      */
     @Override
     protected void putEntry(ExpirableEntry<K, V> newEntry) throws CacheException, ClassCastException {
-
+        redisCommands.set(newEntry.getKey(),newEntry.getValue());
     }
 
     @Override
     protected ExpirableEntry<K, V> removeEntry(K key) throws CacheException, ClassCastException {
-        return null;
+        ExpirableEntry<K,V> oldEntry = getEntry(key);
+        redisCommands.del(key);
+        return oldEntry;
     }
 
     @Override
