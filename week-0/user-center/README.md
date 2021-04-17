@@ -57,5 +57,20 @@
 
 - 需求1：reactive-messaging模块，test目录下，`DefaultSubscriber#onNext()`修改了一点内容
 
+#### 第六周：分支week6
+
+##### 内容：
+
+###### 需求1：通过 Lettuce 实现一套 Redis CacheManager 以及 Cache
+
+###### 需求2：提供一套抽象 API 实现对象的序列化和反序列化
+
+###### week6的一些说明
+- 需求1：包路径com.rolkevin.cache.lettuce是相应的Lettuce实现
+
+- 需求2：接口`GenericSerializer`定义了与`RedisCodec`相关的编码解码操作；`Codecs`通过spi加载`GenericSerializer`的实现，
+在`LettuceCacheManager`实例化的同时初始化相关实现，方法`LettuceCacheManager#doCreateCache`调用时，
+根据具体`configuration`类型获取对应编码解码器，目前只实现了String类型
+
 
 
