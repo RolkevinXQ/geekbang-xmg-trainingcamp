@@ -73,4 +73,14 @@
 根据具体`configuration`类型获取对应编码解码器，目前只实现了String类型
 
 
+#### 第七周：分支week7
+
+##### 内容：
+
+###### 需求：实现Gitee或者Github OAuth2认证
+- 用户登录
+- 1.1 获取认证码code，https://gitee.com/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code
+- 1.2 携带认证码获取access_token，https://gitee.com/oauth/token?grant_type=authorization_code&code={code}&client_id={client_id}&redirect_uri={redirect_uri}&client_secret={client_secret}
+- 1.3 携带access_token访问OpenAPI，获取用户信息
+- 1.4 token失效：https://gitee.com/oauth/token?grant_type=refresh_token&refresh_token={refresh_token}
 

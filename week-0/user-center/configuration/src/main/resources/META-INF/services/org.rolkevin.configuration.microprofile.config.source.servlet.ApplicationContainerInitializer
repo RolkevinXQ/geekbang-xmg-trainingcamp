@@ -1,0 +1,2 @@
+org.rolkevin.configuration.microprofile.config.source.servlet.ServletConfigInitializer
+org.rolkevin.configuration.microprofile.config.source.servlet.ComponentInitializer

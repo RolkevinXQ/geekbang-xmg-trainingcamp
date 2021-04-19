@@ -15,9 +15,29 @@
     <packaging>war</packaging>
 
     <dependencies>
+
+        <!-- Self module -->
         <dependency>
             <groupId>org.rolkevin.trainingcamp</groupId>
             <artifactId>self-web-mvc</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.rolkevin.trainingcamp</groupId>
+            <artifactId>configuration</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.rolkevin.trainingcamp</groupId>
+            <artifactId>dependency-injection</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.rolkevin.trainingcamp</groupId>
+            <artifactId>cache</artifactId>
             <version>${revision}</version>
         </dependency>
 

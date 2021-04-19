@@ -8,40 +8,48 @@
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>self-web-mvc</artifactId>
-    <name>self-web-mvc ${revision}</name>
+    <artifactId>configuration</artifactId>
+    <name>My Configuration Framework ${revision}</name>
     <packaging>jar</packaging>
 
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
     <dependencies>
+
+        <!-- MicroProfile Config -->
         <dependency>
-            <groupId>org.rolkevin.trainingcamp</groupId>
-            <artifactId>dependency-injection</artifactId>
-            <version>${revision}</version>
+            <groupId>org.eclipse.microprofile.config</groupId>
+            <artifactId>microprofile-config-api</artifactId>
         </dependency>
+
+        <!-- Third-Parties Integration -->
 
         <!-- Servlet API -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
 
-        <!-- JAX-RS API -->
+        <!-- Spring Context -->
         <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
         </dependency>
+
     </dependencies>
-
-
-
 
 </project>
