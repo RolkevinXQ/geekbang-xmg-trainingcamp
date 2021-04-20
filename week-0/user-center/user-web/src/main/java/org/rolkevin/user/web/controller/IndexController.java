@@ -1,34 +1,51 @@
-package com.rolkevin.community.controller;
+package org.rolkevin.user.web.controller;
 
-import com.rolkevin.community.mapper.UserMapper;
-import com.rolkevin.community.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+
+
+import org.rolkevin.framework.mvc.controller.PageController;
+import org.rolkevin.user.domain.User;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 
-@Controller
-public class IndexController {
+@Path("")
+public class IndexController implements PageController {
 
-    @Autowired
-    UserMapper userMapper;
 
-    @GetMapping("/")
     public String index(HttpServletRequest request){
         Cookie cookies [] = request.getCookies();
-        for(Cookie cookie:cookies){
-            if(cookie.getName().equals("token")){
-                String token = cookie.getValue();
-                User user = userMapper.selectUserByToken(token);
-                if(user!=null){
-                    request.getSession().setAttribute("user",user);
+        if (null != cookies) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("token")) {
+                    String token = cookie.getValue();
+                    User user = new User();// userMapper.selectUserByToken(token);
+                    user.setName("XQ");
+                    if (user != null) {
+                        request.getSession().setAttribute("user", user);
+                    }
+                    break;
                 }
-                break;
             }
         }
 
-        return "index";
+        return "home.jsp";
+    }
+
+    /**
+     * @param request  HTTP 请求
+     * @param response HTTP 相应
+     * @return 视图地址路径
+     * @throws Throwable 异常发生时
+     */
+    @Override
+    @POST
+    @GET
+    @Path("/")
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws Throwable {
+        return index(request);
     }
 }

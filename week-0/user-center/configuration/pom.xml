@@ -21,6 +21,13 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>org.rolkevin.trainingcamp</groupId>
+            <artifactId>dependency-injection</artifactId>
+            <version>${revision}</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- MicroProfile Config -->
         <dependency>
             <groupId>org.eclipse.microprofile.config</groupId>

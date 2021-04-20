@@ -17,6 +17,7 @@
         <module>reactive-messaging</module>
         <module>cache</module>
         <module>configuration</module>
+        <module>user-third-login</module>
     </modules>
     <!--<version>1.0-SNAPSHOT</version>-->
 
@@ -55,7 +56,7 @@
         <jackson.version>2.9.5</jackson.version>
         <activemq.version>5.9.1</activemq.version>
 
-        <tomcat7.version>7.0.37</tomcat7.version>
+        <tomcat7.version>7.0.107</tomcat7.version>
         <lettuce.version>6.1.0.RELEASE</lettuce.version>
         <jedis.version>3.5.2</jedis.version>
 
@@ -239,6 +240,25 @@
                 <version>${activemq.version}</version>
             </dependency>
 
+            <!-- Apache Tomcat -->
+            <dependency>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-catalina-ha</artifactId>
+                <version>${tomcat7.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-dbcp</artifactId>
+                <version>${tomcat7.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-jdbc</artifactId>
+                <version>${tomcat7.version}</version>
+            </dependency>
+
             <!-- Redis Java Client - Lettuce -->
             <dependency>
                 <groupId>io.lettuce</groupId>
@@ -250,6 +270,12 @@
                 <groupId>redis.clients</groupId>
                 <artifactId>jedis</artifactId>
                 <version>${jedis.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot.version}</version>
             </dependency>
 
             <!-- Testing Dependencies -->
