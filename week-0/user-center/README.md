@@ -84,3 +84,7 @@
 - 1.3 携带access_token访问OpenAPI，获取用户信息
 - 1.4 token失效：https://gitee.com/oauth/token?grant_type=refresh_token&refresh_token={refresh_token}
 
+###### week7的一些说明
+- 实现Gitee的授权登录，模块user-web-third-login，通过Spring-boot
+- 启动：run ThirdLoginApplication，输入地址：http://localhost:8080
+- 右上角显示【登录】，当授权通过以后，则会显示具体的Gitee用户名

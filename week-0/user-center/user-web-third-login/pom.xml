@@ -12,7 +12,6 @@
 
     <artifactId>user-web-third-login</artifactId>
     <name>user-web-third-login ${revision}</name>
-    <packaging>war</packaging>
 
     <dependencies>
 
@@ -26,6 +25,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>3.14.5</version>
+        </dependency>
+
     </dependencies>
 
 

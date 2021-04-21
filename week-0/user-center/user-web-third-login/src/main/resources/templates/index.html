@@ -3,9 +3,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" charset="UTF-8">
     <title>用户中心</title>
-    <link rel="stylesheet" href="/static/css/bootstrap.css"/>
-    <link rel="stylesheet" href="/static/css/bootstrap-theme.css"/>
-    <script src="/static/js/bootstrap.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/bootstrap-theme.css"/>
+    <script src="js/bootstrap.js" type="application/javascript"></script>
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -17,7 +17,6 @@
             </button>
             <a class="navbar-brand" href="#">用户中心</a>
         </div>
-        ${session.user}
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <form class="navbar-form navbar-left">
                 <div class="form-group">
@@ -26,7 +25,7 @@
                 <button type="submit" class="btn btn-default">搜索(无效)</button>
             </form>
             <ul class="nav navbar-nav navbar-right">
-                <li th:if="${session.user} eq null"><a th:href="${session.clientInfo.getUri()}">登录</a></li>
+                <li th:if="${session.user} eq null"><a href="https://gitee.com/oauth/authorize?client_id=b639be1d11ea7602a811090234b2f204de82ff7eac3f7fd783684cbc33e4fbe5&redirect_uri=http://localhost:8080/authcallback&response_type=code">登录</a></li>
                 <li class="dropdown" th:if="${session.user} ne null">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${session.user.getName()}"><div></div> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
