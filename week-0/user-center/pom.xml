@@ -61,8 +61,8 @@
         <lettuce.version>6.1.0.RELEASE</lettuce.version>
         <jedis.version>3.5.2</jedis.version>
 
-        <!-- Spring 依赖版本 -->
-        <spring-boot.version>2.4.5</spring-boot.version>
+        <!-- Spring 依赖版本 2.4.5-->
+        <spring-boot.version>2.0.0.RELEASE</spring-boot.version>
         <thymelef.version>2.2.2.RELEASE</thymelef.version>
 
         <!-- Testing 版本 -->
